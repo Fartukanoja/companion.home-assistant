@@ -1,4 +1,4 @@
----
+--open-
 title: "Overview"
 id: "wear-os"
 ---
