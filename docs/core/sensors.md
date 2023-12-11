@@ -91,6 +91,7 @@ You can change the frequency of sensor updates by navigating to [Settings](https
 | --------- | --------- | ----------- |
 | `binary_sensor.doze` | [See Below](#doze-sensor) | Whether or not the device is in doze mode. |
 | `binary_sensor.interactive` | None | Whether or not the device is in an interactive state. |
+| `binary_sensor.nfc_state` | None | Whether or not the device has its NFC sensor enabled. |
 | `binary_sensor.power_save` | None | Whether or not the device is in power saving mode. |
 | [Activity Sensors](#activity-sensors) | See Below | The current activity type, sleep confidence and sleep segment as computed by Google. Requires activity recognition permissions on supported devices. |
 | `binary_sensor.android_auto` | [See Below](#android-auto-sensor) | A binary sensor to indicate if the device is connected to Android Auto. |
@@ -126,7 +127,7 @@ You can change the frequency of sensor updates by navigating to [Settings](https
 | `sensor.sim_2` | [See Below](#cellular-provider-sensor) | Name of your cellular provider. |
 | `sensor.screen_brightness` | [See Below](#screen-brightness-sensor) | The current value of screen brightness. |
 | `sensor.screen_off_timeout` | None | The current value of screen off timeout setting. |
-| `sensor.steps` | None | The number of steps taken from the user since the last device reboot. Requires activity recognition permissions on supported devies. |
+| `sensor.steps` | None | The number of steps taken from the user since the last device reboot. Requires activity recognition permissions on supported devices. |
 | [Storage Sensors](#storage-sensor) | [See Below](#storage-sensor) | The amount of total and available internal & external storage on your Android device. |
 | [Traffic Stats Sensor](#traffic-stats-sensor) | None | Amount of data transmitted and received from mobile and total device usage since last reboot. |
 | [WiFi Sensors](#connection-type-sensor) | None | Several different sensors around the state of WiFi. |
@@ -283,7 +284,7 @@ This Bluetooth Connection state will be the total number of connected bluetooth 
 There will also be a binary sensor for the `bluetooth_state` that will represent whether or not bluetooth is turned on for the device. This sensor will update anytime the state of bluetooth changes.
 
 ![Android](/assets/android.svg)
-A BLE Transmitter sensor allows your device to transmit a BLE iBeacon. The iBeacon is capable of being detected by the [iBeacon integration](https://www.home-assistant.io/integrations/ibeacon). This sensor can also be useful in conjunction with projects like [roomassistant](https://www.room-assistant.io/) and [esp32-mqtt-room ](https://jptrsn.github.io/ESP32-mqtt-room/) to allow room level tracking.  The current transmitting ID (UUID-Major-Minor) is reported as an attribute that can be copied for use with these systems.
+A BLE Transmitter sensor allows your device to transmit a BLE iBeacon. The iBeacon is capable of being detected by the [iBeacon integration](https://www.home-assistant.io/integrations/ibeacon) if your device sends the device name ([see why here](https://github.com/home-assistant/android/pull/2941#issuecomment-1272379540)). This sensor can also be useful in conjunction with projects like [roomassistant](https://www.room-assistant.io/) and [esp32-mqtt-room ](https://jptrsn.github.io/ESP32-mqtt-room/) to allow room level tracking.  The current transmitting ID (UUID-Major-Minor) is reported as an attribute that can be copied for use with these systems.
 
 :::caution
 This sensor can impact battery life, particularly if used wih Transmit Power set to High. The iBeacon is transmitted every second (low latency to save battery, but sufficient for room presence).
@@ -310,23 +311,23 @@ When the app is actively scanning for beacons a notification will be shown to ma
 ## Car Sensors
 ![Android](/assets/android.svg)
 
-The sensors listed below describe the state of the car for a few different data points. Currently this is only available for Android Auto. These sensors may not provide data depending on your phone and/or car software.
+The sensors listed below describe the state of the car for a few different data points. Currently this is only available for Android Auto. These sensors may not provide data depending on your phone and/or car software. If you see a state of `unknown` check the `status` attribute to see the reason for why it has no data.
 
 :::caution
- Note that you need to start the Home-Assistant app on your Android Auto screen each time that you connect the phone to the car to allow these sensors to work (once started, you can dismiss the app).
+ Note that you need to start the Home-Assistant app on your Android Auto screen each time that you connect the phone to the car to allow these sensors to work (once started, you can dismiss the app). If the app is not started the state will be `unavailable`.
 
  To make things easier, you may want to use the [`car_ui` parameter](../android-auto/android-auto.md#notifications) to show a notification on your car when you [connect your phone](./sensors.md#android-auto).
 :::
 
 | Sensor | Description |
 | --------- | --------- |
-| `car_battery` | <span class='beta'>BETA</span> The percentage of battery remaining |
-| `car_charging_status` | <span class='beta'>BETA</span> The charging status of the car (only for EVs). The state of the charging port is in the attributes  |
-| `car_ev_connector` | <span class='beta'>BETA</span> List of available EV connectors for the car |
-| `car_fuel` | <span class='beta'>BETA</span> The percentage of fuel remaining |
-| `car_fuel_type` | <span class='beta'>BETA</span> List of available fuel types for the car. |
-| `car_name` | <span class='beta'>BETA</span> The name of the car. The manufacturer name and manufactured year are in the attributes |
-| `car_odometer` | <span class='beta'>BETA</span> The the value of the car odometer in meters |
+| `car_battery` | The percentage of battery remaining |
+| `car_charging_status` | The charging status of the car (only for EVs). The state of the charging port is in the attributes  |
+| `car_ev_connector` | List of available EV connectors for the car |
+| `car_fuel` | The percentage of fuel remaining |
+| `car_fuel_type` | List of available fuel types for the car. |
+| `car_name` | The name of the car. The manufacturer name and manufactured year are in the attributes |
+| `car_odometer` | The the value of the car odometer in meters |
 
 ## Cellular Provider Sensor
 The cellular provider sensor displays information about the user’s cellular service provider, such as its unique identifier and whether it allows VoIP calls on its network. `sensor.sim_1` corresponds to the physical SIM card installed and `sensor.sim_2` corresponds to the eSIM (this is only shown if the eSIM is enabled).
@@ -376,6 +377,7 @@ For Android several different types of connection sensors are available and they
 | `signal_strength` | The signal strength of the device to the WiFi network |
 | `wifi_state` | Whether or not WiFi is turned on for the device |
 | `transport_type` | The transport type for the current network connection. An attribute will reflect if the current network is metered. |
+| `hotspot_state` | <span class='beta'>BETA</span> Whether or not the device is currently broadcasting a WiFi hotspot. (Not available on Wear OS) |
 
 ![Android](/assets/android.svg) The `bssid` sensor offers settings to let you rename the current mac address to help avoid the need for templates and secret usage in automations and the front end. This is generally useful if you have multiple access points and want an easy way to differentiate between them. These settings are turned off by default. These sensors require either [Background Location](https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION) or [Fine Location](https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION) permissions, depending on what version of Android you run.
 
@@ -423,7 +425,7 @@ This sensor updates immediately when the frontmost app changes.
 | `Owns Menu Bar` | Whether the application "owns" the menu bar. For example, a menu-bar-only app will not change the contents of the menu bar, even when it is frontmost it is not necessarily as primary. |
 
 ## Geocoded Location Sensor
-The [geocoded](https://.wikipedia.org/wiki/Geocoding) location sensor provides a user-friendly description of a users current location coordinates, often containing the name of the place, its address, and other relevant information. This sensor reports many detailed attributes allowing you to create useful [template sensors](https://www.home-assistant.io/components/template/).
+The [geocoded](https://en.wikipedia.org/wiki/Geocoding) location sensor provides a user-friendly description of a users current location coordinates, often containing the name of the place, its address, and other relevant information. This sensor reports many detailed attributes allowing you to create useful [template sensors](https://www.home-assistant.io/components/template/).
 
 Geocoding is handled directly by iOS's [MapKit](https://developer.apple.com/documentation/mapkit) and [Core Location](https://developer.apple.com/documentation/corelocation/converting_between_coordinates_and_user-friendly_place_names) services. In Android geocoding is handled by the internal [Geocoder](https://developer.android.com/reference/android/location/Geocoder).
 
@@ -456,19 +458,22 @@ Geocoding is handled directly by iOS's [MapKit](https://developer.apple.com/docu
 ![Android](/assets/android.svg) This sensors state will reflect if the device has [high accuracy mode](location.md#high-accuracy-mode) currently enabled or not. This sensor will update as soon as the state of high accuracy mode changes, the sensor will not appear until high accuracy mode is enabled for the first time.
 
 ## High Accuracy Update Interval
-![Android](/assets/android.svg) This sensors state will reflect the update interval for the device in seconds for [high accuracy mode](location.md#high-accuracy-mode). This sensor will update as soon as the value changes either manaully or by the [notification command](../notifications/commands.md#high-accuracy-mode).
+![Android](/assets/android.svg) This sensors state will reflect the update interval for the device in seconds for [high accuracy mode](location.md#high-accuracy-mode). This sensor will update as soon as the value changes either manually or by the [notification command](../notifications/commands.md#high-accuracy-mode).
 
 ## Interactive Sensor
 ![Android](/assets/android.svg) This sensors state will reflect if the device is in an interactive state. This is typically when the screen comes on and off but may vary from device to device. This sensor will update as soon state changes are detected, data is provided by [PowerManager](https://developer.android.com/reference/android/os/PowerManager.html).
 
 Using the [History Stats Integration](https://www.home-assistant.io/integrations/history_stats/), it is possible to monitor both the daily screen time `type: time` as well as the amount of times the screen has been turned on that day `type: count`.
 
-
 ## Keyguard Sensors
 ![Android](/assets/android.svg)
 
 These sensors will reflect various states from the [Keyguard Manager](https://developer.android.com/reference/android/app/KeyguardManager). You will be able to determine if the device is actively locked, has a password setup or even if the device requires a password to unlock. These sensors will update with the periodic sensor interval.
 
+## NFC State Sensor
+![Android](/assets/android.svg)
+
+ This sensors state will reflect if the device has its NFC sensor currently enabled or not. This sensor will update as soon state changes are detected. Data is provided by [NfcAdapter](https://developer.android.com/reference/android/nfc/NfcAdapter).
 
 ## Notification Sensors
 ![Android](/assets/android.svg)<br />
@@ -477,7 +482,7 @@ Note: Sensors with Allow Lists will not appear as new entities in Home Assistant
 
 ### Last Notification
 
-This sensor will reflect the last notification posted on the device. This sensor requires a special permission that the app will take the user to so they can grant access to notifications. This sensors state will default to the text of the notification or if not available the posting package name. This sensor offers a setting for an Allow List to let the user select which packages they wish to get notification data from, notifications sent by Home Assistant are always ignored. You need to either create an allow list or enable the setting to "Disable Allow List Requirement". Keep in mind without an allow list this sensor has the potential to drain a lot of battery. We highly recommend creating an allow list over diasbling this requirement. This can be very useful to integrate any app that sends a notification but does not offer direct integration (ex: food delivery apps or 2FA SMS codes). There are several attributes a user can expect to see, although not all attributes will contain data. This sensor makes use of the [NotificationListenerService API](https://developer.android.com/reference/android/service/notification/NotificationListenerService#onNotificationRemoved(android.service.notification.StatusBarNotification)).  More details on each attribute can be found in the [Notification Extras](https://developer.android.com/reference/android/app/Notification).
+This sensor will reflect the last notification posted on the device. This sensor requires a special permission that the app will take the user to so they can grant access to notifications. This sensors state will default to the text of the notification or if not available the posting package name. This sensor offers a setting for an Allow List to let the user select which packages they wish to get notification data from, notifications sent by Home Assistant are always ignored. You need to either create an allow list or enable the setting to "Disable Allow List Requirement". Keep in mind without an allow list this sensor has the potential to drain a lot of battery. We highly recommend creating an allow list over disabling this requirement. This can be very useful to integrate any app that sends a notification but does not offer direct integration (ex: food delivery apps or 2FA SMS codes). There are several attributes a user can expect to see, although not all attributes will contain data. This sensor makes use of the [NotificationListenerService API](https://developer.android.com/reference/android/service/notification/NotificationListenerService#onNotificationRemoved(android.service.notification.StatusBarNotification)).  More details on each attribute can be found in the [Notification Extras](https://developer.android.com/reference/android/app/Notification).
 
 ### Last Removed Notification
 

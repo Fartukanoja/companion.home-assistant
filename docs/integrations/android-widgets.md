@@ -21,7 +21,7 @@ This widget will update every hour or when it is tapped. The widget will just co
 
 ### Entity State
 
-This widget will be updated when the entity state changes or when it is tapped. This widget will allow the user to select any entity they wish to get the state and an attribute from as well as setting the text size and adding a custom separator between the state and attributes.
+This widget will be updated when the entity state changes or when it is manually refreshed. This widget will allow the user to select any entity they wish to get the state and an attribute from as well as setting the text size and adding a custom separator between the state and attributes.
 
 1.  Long press on any open space in the home screen
 2.  Scroll down to Home Assistant in the widget list
@@ -30,8 +30,9 @@ This widget will be updated when the entity state changes or when it is tapped. 
 5.  If needed select the attribute checkbox and select the attribute you wish to add to the state
 6.  If needed adjust the widget text size
 7.  If needed add a custom separator to sit between the state and attribute
-8.  Supply a name for the widget
-9.  Save the widget
+8.  If supported choose the tap action for the widget: toggle the entity or refresh the state manually (if not supported a tap will refresh)
+9.  Supply a name for the widget
+10.  Save the widget
 
 
 ### Media Player
@@ -65,7 +66,7 @@ You may set the checkbox "Require authentication". If it is set, device credenti
 
 This widget will display any text that you wish to show in a widget using [Home Assistants templating feature](https://www.home-assistant.io/docs/configuration/templating/). This is an advanced feature but allows the user to display a wide variety of data. The template will be updated instantly on relevant states changes. When editing the widget, the template will be shown below the text field so you can preview what it would look like.
 
-You may also use HTML to format the text displayed such as adding a new line (`<br>`), making something bold (`<b>`) or large (`<big>`) or changing the color (`<font color='#03a9f4'>`).
+You may also use HTML to format the text displayed such as adding a new line (`<br>`), making something bold (`<b>`) or large (`<big>`), changing the color (`<font color='#03a9f4'>`) or aligning it to the start or end of a line (`<p style="text-align: end">`).
 
 If the template in the widget isn't updating instantly, you're most likely hitting [rate limits](https://www.home-assistant.io/integrations/template/#rate-limiting-updates). Try optimizing your template to get faster updates, or tap on the widget to update it manually. You can also use the preview in [`Developer Tools > Template`](https://my.home-assistant.io/redirect/developer_template/) to test your template updates.
 

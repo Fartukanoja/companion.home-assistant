@@ -25,14 +25,14 @@ const features = [
           <b><a href='/docs/apple-watch'>Apple Watch</a></b>
           {' '}Actions and complications all from your Watch app.
           <br />
-          <b><a href='/docs/meta-quest'>Meta Quest</a></b>
-          {' '}Get data from your Quest into Home Assistant.
-          <br />
           <b><a href='/docs/wear-os'>Wear OS</a></b>
           {' '}Control your home from your Wear OS device.
           <br />
-          <b><a href='/docs/android-auto'>Android Auto</a></b>
-          {' '}Control your home from your Android Auto compatable vehicle.
+          <b><a href='/docs/android-auto'>Android Auto/Automotive</a></b>
+          {' '}Control your home from your Android Auto/Automotive compatible vehicle.
+          <br />
+          <b><a href='/docs/meta-quest'>Meta Quest</a></b>
+          {' '}Get data from your Quest into Home Assistant.
           <br />
           <b><a href='/docs/troubleshooting/faqs'>Troubleshooting</a></b>
           {' '}If you need some help, this is a great place to start.
@@ -117,10 +117,7 @@ function Home() {
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <div className="row">
-            <div className={clsx('col col--5')}>
-              <img className={styles.heroLogo} alt="Home Assistant Logo" src="/img/logo-white.svg" />
-            </div>
-            <div className={clsx('col col--5')}>
+            <div className={clsx('col col--10')}>
               <h1 className={styles.heroTitle}>{siteConfig.title}</h1>
               <p className={styles.heroTagline}>{siteConfig.tagline}</p>
               <div className={styles.buttons}>

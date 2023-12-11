@@ -8,17 +8,19 @@ Home Assistant supports opening from other apps via URL.
 Query parameters are passed as a dictionary in the call.
 
 :::info
-![iOS](/assets/iOS.svg)<br />
-If multiple servers are connected to an iOS or Mac app, you will be prompted to select a server when handling a `navigate` link, `call_service`, or `fire_event`  links will be handled using the first server in the list.
-
-![Android](/assets/android.svg)<br />
-If multiple servers are connected to an Android app, `navigate` links will be handled using the most recently used server in the list.
+If multiple servers are connected to an app, you will be prompted to select a server when handling a `navigate` link. `call_service` and `fire_event`  links will be handled using the first server in the list.
 :::
 
 ## Navigate
 This allows you to update the frontend page location via a deeplink.
 
 For example: if you had a dashboard at `/lovelace/webcams` you can use `homeassistant://navigate/lovelace/webcams` to launch the app there.
+
+#### Define server
+![iOS](/assets/iOS.svg) <span class='beta'>BETA</span><br />
+By default the App will ask which server you want to navigate to in case you have multiple servers.
+To define which server you want to navigate to, use the query param `?server=` like the example below:<br /><br />
+`homeassistant://navigate/lovelace/webcams?server=My%20home` when your server name is `My Home`, or use `?server=default` if you want to navigate to the first server available.
 
 ## Call service
 ![iOS](/assets/iOS.svg)<br />

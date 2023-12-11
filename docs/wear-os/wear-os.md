@@ -3,6 +3,8 @@ title: "Overview"
 id: "wear-os"
 ---
 
+![Android](/assets/android.svg) 8+ only
+
 You can access Home Assistant directly from your Wear OS watch, even when not connected to your phone using a WiFi or cellular connection on the watch or when using an iPhone. 
 
 The app does not support all Home Assistant features. Keep an eye out on this page as the app is enhanced with new features! Take a look at the [Sensors!](sensors.md)
@@ -47,9 +49,9 @@ The settings screen can be found at the bottom of the home screen. This is where
 
 ## Tiles
 
-* The Shortcuts tile shows up to 7 shortcuts, which can be chosen from the settings section in the Wear OS app. You will be able to select the same set of entities you can access from the home screen. 
-<span class='beta'>BETA</span> Starting from Wear OS 3, any number of separately configurable tiles can be added, only limited by Wear OS's limit for the total number of tiles.
-* The Template tile shows a rendered template. The template can only be set from the android companion app. Note: it is not possible to scroll in a tile, the template should fit on the watch screen.
+* The Shortcuts tile shows up to 7 shortcuts, which can be chosen from the settings section in the Wear OS app. You will be able to select the same set of entities you can access from the home screen.  Starting from Wear OS 3, any number of separately configurable tiles can be added, only limited by Wear OS's limit for the total number of tiles.
+* The Template tile shows a rendered template. The template can only be set from the Android companion app. Note: it is not possible to scroll in a tile, the template should fit on the watch screen.
+* The Camera tile shows a snapshot of the selected camera.
 * The Assist tile allows you to send a voice transcription to the [`conversation`](https://www.home-assistant.io/integrations/conversation/) integration to process. The results are then shown on the screen. This feature requires Home Assistant Core 2023.1 and also the `conversation` integration enabled.
 
 ### Styling the template tile
@@ -64,7 +66,7 @@ You may use HTML to format the text displayed. The following tags are currently 
 
 ## Complications
 
-* An entity state complication can be displayed on your watchface. The complication will display the current state of the selected entity, and optionally the name (<span class='beta'>BETA</span> and unit of the measurement). Depending on the watchface, the complication may also show the entity name and icon, and supports 'short text' and 'long text' complication types.
+* An entity state complication can be displayed on your watchface. The complication will display the current state of the selected entity and optionally the name and unit of the measurement. Depending on the watchface, the complication may also show the entity name and icon, and supports 'short text' and 'long text' complication types.
 
   When you add an entity to a watchface, you can select the entity to display. This only works when editing the watchface on the watch, not in the watch app on the phone. To change the selected entity, just change the complication and select the entity state complication again. The complications are updated automatically whenever the screen is turned on and roughly every 15 minutes. You can force a complication to update by tapping it on the watchface.
 
@@ -104,7 +106,7 @@ automation:
 ```
 
 :::info
-To speed up delivery of notifications you may need to use the first critical notification format listed in the [docs](../notifications/critical.md#android). Alarm stream and TTS notifications are currently not supported in Wear OS.
+To speed up delivery of notifications you may need to use the first critical notification format listed in the [docs](../notifications/critical.md#android). Alarm stream notifications are currently not supported in Wear OS.
 :::
 
 ### Notification Commands
@@ -113,6 +115,9 @@ The Wear OS app has basic support for [notification commands](../notifications/c
 
 *  [BLE Transmitter](../notifications/commands.md#ble-beacon-transmitter)
 *  [Beacon Monitor](../notifications/commands.md#beacon-monitor)
+*  [Clearing notifications](../notifications/basic.md#clearing) <span class='beta'>BETA</span>
+*  [Stop TTS](../notifications/commands.md#stop-tts)
+*  [Update Sensors](../notifications/commands.md#update-sensors)
 
 ### Text To Speech Notifications
 
